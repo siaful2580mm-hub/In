@@ -2,8 +2,7 @@
 {% block title %}উইথড্র - InfinityWork{% endblock %}
 {% block content %}
 {% set bal = user.balance|float %}
-{% set bal_ok = bal >= 350 %}
-{% set ref_ok = referral_count >= 4 %}
+{% set bal_ok = bal >= 400 %}
 {% set can_withdraw = bal_ok and ref_ok %}
 
 <div class="max-w-xl mx-auto space-y-5">
