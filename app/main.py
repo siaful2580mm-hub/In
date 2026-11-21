@@ -2598,7 +2598,7 @@ async def payout_submit(
 
     referrals = await db.select("users", filters={"referred_by": user["referral_code"]})
     ref_count = len(referrals)
-    if ref_count < 4:
+    if ref_count < 0:
         return redirect_with_flash(
             request,
             "/payout",
@@ -2607,8 +2607,8 @@ async def payout_submit(
         )
 
     current_bal = float(user.get("balance", 0))
-    if amount < 350:
-        return redirect_with_flash(request, "/payout", "সর্বনিম্ন উইথড্র ৩৫০৳!", "error")
+    if amount < 400:
+        return redirect_with_flash(request, "/payout", "সর্বনিম্ন উইথড্র 400৳!", "error")
     if amount > current_bal:
         return redirect_with_flash(request, "/payout", "আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!", "error")
 
