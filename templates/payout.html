@@ -36,16 +36,16 @@
     <div class="grid sm:grid-cols-2 gap-3 text-xs">
       <div class="rounded-2xl p-3.5 border {% if bal_ok %}bg-emerald-50 border-emerald-300{% else %}bg-white border-emerald-100{% endif %} space-y-1.5">
         <div class="flex items-center justify-between font-extrabold">
-          <span>১. মিনিমাম ৩৫০৳ ব্যালেন্স</span>
+          <span>১. মিনিমাম 400৳ ব্যালেন্স</span>
           {% if bal_ok %}
           <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
           {% else %}
           <i class="fa-solid fa-lock text-amber-500 text-sm"></i>
           {% endif %}
         </div>
-        <div class="text-[11px] text-emerald-700">বর্তমান: <b>৳{{ "%.2f"|format(bal) }}</b> / ৳350.00</div>
+        <div class="text-[11px] text-emerald-700">বর্তমান: <b>৳{{ "%.2f"|format(bal) }}</b> / ৳400.00</div>
         <div class="w-full h-2 bg-emerald-100 rounded-full overflow-hidden">
-          {% set bal_pct = [((bal / 350) * 100)|round|int, 100]|min %}
+          {% set bal_pct = [((bal / 400) * 100)|round|int, 100]|min %}
           <div class="h-full bg-emerald-600 rounded-full transition-all" style="width: {{ bal_pct }}%"></div>
         </div>
       </div>
@@ -59,25 +59,11 @@
           <i class="fa-solid fa-lock text-amber-500 text-sm"></i>
           {% endif %}
         </div>
-        <div class="text-[11px] text-emerald-700">বর্তমান: <b>{{ referral_count }}</b> / 4 টি সম্পন্ন</div>
-        <div class="w-full h-2 bg-emerald-100 rounded-full overflow-hidden">
-          {% set ref_pct = [((referral_count / 4) * 100)|round|int, 100]|min %}
-          <div class="h-full bg-emerald-600 rounded-full transition-all" style="width: {{ ref_pct }}%"></div>
-        </div>
+    
       </div>
     </div>
 
-    {% if not ref_ok %}
-    <div class="flex items-center justify-between gap-2 bg-amber-50 border border-amber-200 rounded-2xl p-3 text-xs">
-      <div class="text-amber-900 font-bold">
-        <i class="fa-solid fa-users mr-1"></i> আরও {{ 4 - referral_count }}টি রেফার করলে উইথড্র আনলক হবে!
-      </div>
-      <button id="payout-copy-ref" onclick="copyText('{{ request.base_url }}signup?ref={{ user.referral_code }}', 'payout-copy-ref')"
-              class="bg-emerald-900 text-white px-3 py-1.5 rounded-xl font-bold shrink-0">
-        লিংক কপি
-      </button>
-    </div>
-    {% endif %}
+
   </div>
 
   <!-- Withdraw Form Card with Brand SVG Logos -->
@@ -141,7 +127,7 @@
       </div>
 
       <div>
-        <label class="text-xs font-bold block mb-1 text-emerald-900">টাকার পরিমাণ (সর্বনিম্ন ৩৫০৳)</label>
+        <label class="text-xs font-bold block mb-1 text-emerald-900">টাকার পরিমাণ (সর্বনিম্ন 400৳)</label>
         <input type="number" name="amount" min="350" step="1" required placeholder="350"
                class="w-full px-4 py-3 rounded-2xl border border-emerald-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
       </div>
@@ -152,7 +138,7 @@
         {% if can_withdraw %}
         <i class="fa-solid fa-paper-plane"></i> উইথড্র রিকুয়েস্ট দিন
         {% else %}
-        <i class="fa-solid fa-lock"></i> ৩৫০৳ ও ৪টি রেফার পূর্ণ হলে আনলক হবে
+        <i class="fa-solid fa-lock"></i> 400৳ হলেই আনলক হবে
         {% endif %}
       </button>
     </form>
