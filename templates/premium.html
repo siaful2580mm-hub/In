@@ -1,19 +1,32 @@
 {% extends "base_app.html" %}
-{% block title %}Premium Tasks - InfinityWork{% endblock %}
+{% block title %}প্রিমিয়াম টাস্ক (৭০৳+) - InfinityWork{% endblock %}
 {% block content %}
+{% set bd_premium_tasks = [
+  {"title": "Facebook পেইজ ফলো, ১০টি পোস্টে লাইক ও শেয়ার", "cat": "Facebook", "rate": 75, "time": "৩ মিনিট", "icon": "fa-brands fa-facebook", "bg": "bg-blue-100 text-blue-600"},
+  {"title": "YouTube চ্যানেল সাবস্ক্রাইব ও ৫ মিনিট ভিডিও দেখা", "cat": "YouTube", "rate": 80, "time": "৫ মিনিট", "icon": "fa-brands fa-youtube", "bg": "bg-red-100 text-red-600"},
+  {"title": "Play Store অ্যাপ ডাউনলোড ও ৫ স্টার রিভিউ", "cat": "App Review", "rate": 110, "time": "৪ মিনিট", "icon": "fa-brands fa-google-play", "bg": "bg-emerald-100 text-emerald-700"},
+  {"title": "Google Map লোকেশন রিভিউ ও ছবি আপলোড", "cat": "Google Map", "rate": 90, "time": "৩ মিনিট", "icon": "fa-solid fa-map-location-dot", "bg": "bg-amber-100 text-amber-600"},
+  {"title": "TikTok আইডি ফলো ও ৫টি ভিডিওতে কমেন্ট", "cat": "TikTok", "rate": 70, "time": "২ মিনিট", "icon": "fa-brands fa-tiktok", "bg": "bg-rose-100 text-rose-600"},
+  {"title": "ওয়েবসাইট ভিজিট ও ২ মিনিট আর্টিকেল পড়া", "cat": "Web Visit", "rate": 75, "time": "৩ মিনিট", "icon": "fa-solid fa-globe", "bg": "bg-sky-100 text-sky-700"},
+  {"title": "Daraz পণ্যে ভিজিট ও পজিটিভ রিভিউ দেওয়া", "cat": "E-Commerce", "rate": 95, "time": "৪ মিনিট", "icon": "fa-solid fa-bag-shopping", "bg": "bg-orange-100 text-orange-600"},
+  {"title": "Telegram চ্যানেল জয়েন ও ৫ জন বন্ধু অ্যাড", "cat": "Telegram", "rate": 85, "time": "৩ মিনিট", "icon": "fa-brands fa-telegram", "bg": "bg-sky-100 text-sky-600"},
+  {"title": "Instagram পেইজ ফলো ও রিলস শেয়ার করা", "cat": "Instagram", "rate": 70, "time": "২ মিনিট", "icon": "fa-brands fa-instagram", "bg": "bg-pink-100 text-pink-600"},
+  {"title": "অ্যান্ড্রয়েড গেম ইনস্টল করে লেভেল ২ সম্পন্ন", "cat": "Game Task", "rate": 150, "time": "৭ মিনিট", "icon": "fa-solid fa-gamepad", "bg": "bg-purple-100 text-purple-700"}
+] %}
+
 <div class="max-w-2xl mx-auto space-y-5">
   <!-- Hero Card -->
-  <div class="rounded-[2rem] bg-gradient-to-br from-emerald-900 via-emerald-950 to-teal-950 text-white p-6 shadow-xl relative overflow-hidden">
-    <div class="absolute -right-6 -bottom-6 text-yellow-300/10 text-9xl pointer-events-none">
+  <div class="rounded-[2rem] bg-gradient-to-br from-emerald-800 via-emerald-900 to-emerald-950 text-white p-5 sm:p-6 shadow-xl relative overflow-hidden">
+    <div class="absolute -right-6 -bottom-6 text-yellow-300/10 text-8xl pointer-events-none">
       <i class="fa-solid fa-crown"></i>
     </div>
     <div class="relative z-10 flex flex-wrap items-center justify-between gap-4">
       <div class="space-y-1.5">
         <span class="inline-flex items-center gap-1.5 bg-yellow-300 text-emerald-950 px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase">
-          <i class="fa-solid fa-crown"></i> High-Paying Premium Zone
+          <i class="fa-solid fa-crown"></i> প্রিমিয়াম টাস্ক • ৭০৳ - ১৫০৳
         </span>
-        <h1 class="text-2xl font-extrabold">প্রিমিয়াম টাস্ক সমূহ</h1>
-        <p class="text-xs text-emerald-200">আন্তর্জাতিক ও উচ্চ আয়ের এক্সক্লুসিভ কাজসমূহ</p>
+        <h1 class="text-xl sm:text-2xl font-extrabold">সহজ প্রিমিয়াম কাজসমূহ</h1>
+        <p class="text-xs text-emerald-200">কম সময়ে বড় রিওয়ার্ডের সহজ মোবাইল কাজ</p>
       </div>
       {% if active_pro %}
       <span class="bg-emerald-500/25 border border-emerald-400 text-emerald-200 px-4 py-2 rounded-full text-xs font-extrabold">
@@ -29,41 +42,38 @@
 
   <!-- Honest Green Info Note -->
   <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-xs text-emerald-900 flex items-start gap-2.5">
-    <i class="fa-solid fa-circle-info text-emerald-700 mt-0.5 text-sm"></i>
+    <i class="fa-solid fa-circle-info text-emerald-700 mt-0.5 text-sm shrink-0"></i>
     <span>ফ্রি ইউজাররাও সাধারণ টাস্ক করে <b>১০০% ফ্রিতে</b> আয় ও উইথড্র করতে পারবেন। প্রিমিয়াম টাস্কগুলো শুধুমাত্র <b>Pro মেম্বারদের</b> জন্য বাড়তি সুবিধা।</span>
   </div>
 
-  <!-- Premium Tasks List (Locked for Free Users) -->
+  <!-- Responsive Easy BD Premium Tasks List -->
   <div class="space-y-3">
-    {% for t in premium_tasks %}
-    <div class="soft-card rounded-3xl p-4 sm:p-5 flex items-center justify-between gap-3 relative overflow-hidden {% if not active_pro %}bg-white/80{% endif %}">
-      <div class="flex items-center gap-3.5 min-w-0">
-        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0
-          {% if active_pro %}bg-amber-100 text-amber-700{% else %}bg-slate-100 text-slate-500{% endif %}">
-          <i class="fa-solid {{ t.icon }}"></i>
+    {% for t in bd_premium_tasks %}
+    <div class="soft-card rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 hover:border-emerald-300 transition">
+      <div class="flex items-start sm:items-center gap-3.5 min-w-0">
+        <div class="w-12 h-12 rounded-2xl {{ t.bg }} flex items-center justify-center text-xl shrink-0">
+          <i class="{{ t.icon }}"></i>
         </div>
 
         <div class="min-w-0 space-y-1">
           <div class="flex flex-wrap items-center gap-1.5">
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900">{{ t.category }}</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-900">{{ t.cat }}</span>
             <span class="text-[10px] text-emerald-700 font-bold"><i class="fa-regular fa-clock mr-0.5"></i>{{ t.time }}</span>
           </div>
-          <h3 class="font-extrabold text-sm text-emerald-950 truncate">{{ t.title }}</h3>
+          <h3 class="font-extrabold text-sm text-emerald-950 leading-snug">{{ t.title }}</h3>
         </div>
       </div>
 
-      <div class="flex items-center gap-3 shrink-0">
-        <div class="text-right">
-          <div class="text-base sm:text-lg font-extrabold text-emerald-700">৳{{ "%.0f"|format(t.rate) }}</div>
-        </div>
+      <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-emerald-100 shrink-0">
+        <div class="text-lg font-extrabold text-emerald-700">৳{{ t.rate }}</div>
 
         {% if active_pro %}
-        <a href="/task" class="bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-full text-xs font-extrabold shadow">
+        <a href="/task" class="bg-emerald-900 hover:bg-emerald-800 text-white px-5 py-2 rounded-full text-xs font-extrabold shadow">
           শুরু করুন →
         </a>
         {% else %}
-        <a href="/pro" class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-amber-100 border border-slate-200 hover:border-amber-300 text-slate-700 hover:text-amber-950 px-3.5 py-2 rounded-full text-xs font-extrabold transition">
-          <i class="fa-solid fa-lock text-amber-600"></i> Locked
+        <a href="/pro" class="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-950 px-4 py-2 rounded-full text-xs font-extrabold transition">
+          <i class="fa-solid fa-lock text-amber-600"></i> প্রো দিয়ে খুলুন
         </a>
         {% endif %}
       </div>
