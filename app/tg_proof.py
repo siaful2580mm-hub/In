@@ -23,7 +23,7 @@ def mask_account(acc: str) -> str:
     return f"{s[:3]}••••{s[-4:]}"
 
 
-def pick_weighted_status() -> tuple[str, str, str, str]:
+def pick_weighted_status() -> tuple[str, str, str, str, str]:
     """
     60% -> Withdrawal Success
     37% -> Withdraw Request Success
@@ -33,7 +33,6 @@ def pick_weighted_status() -> tuple[str, str, str, str]:
     r = random.random() * 100
 
     if r < 60:
-        # Avoid getting stuck on Success too many times in a row
         if _LAST_STATUS_KEY == "success" and random.random() < 0.45:
             _LAST_STATUS_KEY = "request"
             return ("request", "📥", "Withdraw Request Success", "Pending Review ⏳", "New payout request queued for verification")
@@ -49,14 +48,15 @@ def pick_weighted_status() -> tuple[str, str, str, str]:
 
 def pick_weighted_amount() -> float:
     """
-    60% -> 350 - 500
+    Minimum 400৳:
+    60% -> 400 - 500
     25% -> 500 - 1000
     10% -> 1000 - 1500
     5%  -> 2000 - 2200
     """
     r = random.random() * 100
     if r < 60:
-        return float(random.randint(70, 100) * 5)      # 350 - 500
+        return float(random.randint(80, 100) * 5)      # 400 - 500
     elif r < 85:
         return float(random.randint(100, 200) * 5)     # 500 - 1000
     elif r < 95:
@@ -93,17 +93,15 @@ def generate_realistic_fake_proof(force_type: str | None = None) -> dict:
         uid_num = random.randint(110, 999)
         last3 = random.randint(100, 999)
         masked_acc = f"UID-{uid_num}••••{last3}"
-        trx_prefix = "BIN"
     else:
         prefix = random.choice(["017", "018", "019", "016", "013"])
         last4 = random.randint(1000, 9999)
         masked_acc = f"{prefix}••••{last4}"
-        trx_prefix = {"bKash": "BKS", "Nagad": "NGD", "Rocket": "RKT"}[method]
 
     user_id = random.randint(1024, 9890)
     ref_prefixes = ["ARIF", "RAFI", "TANV", "SADI", "MEHE", "NUSR", "SABB", "MAHM", "NAIM", "INF"]
     refer_id = f"{random.choice(ref_prefixes)}{secrets.token_hex(2).upper()}"
-    trx_hash = f"{trx_prefix}{secrets.token_hex(5).upper()}"
+    trx_hash = f"IW-PAY-{random.randint(78329, 99999)}"
 
     return {
         "emoji": emoji,
@@ -141,7 +139,7 @@ def format_tg_message(data: dict) -> str:
         f"👤 <b>User Data</b>\n"
         f"┣ <b>User ID:</b> <code>#IW-{uid}</code>\n"
         f"┣ <b>Refer ID:</b> <code>{ref_id}</code>\n"
-        f"┗ <b>Trx Hash:</b> <code>{trx}</code></blockquote>\n"
+        f"┗ <b>Payment ID:</b> <code>{trx}</code></blockquote>\n"
         f"🕒 <i>{bd_time} (BDT)</i>  •  ⚡ <b>0% Fee</b>"
     )
 
@@ -175,7 +173,14 @@ async def send_to_proof_channel(text: str) -> tuple[bool, str]:
         return False, str(e)
 
 
-async def notify_real_withdrawal(user: dict, method: str, account_number: str, amount: float, status: str = "request"):
+async def notify_real_withdrawal(
+    user: dict,
+    method: str,
+    account_number: str,
+    amount: float,
+    status: str = "request",
+    payout_id: int | None = None,
+):
     if status == "paid":
         emoji, headline, st_txt, sub = (
             "✅", "Withdrawal Success", "Paid Successfully ✅", "Instant 0% fee payout completed"
@@ -189,7 +194,7 @@ async def notify_real_withdrawal(user: dict, method: str, account_number: str, a
             "📥", "Withdraw Request Success", "Pending Review ⏳", "New payout request queued for verification"
         )
 
-    trx_prefix = {"bKash": "BKS", "Nagad": "NGD", "Rocket": "RKT", "Binance": "BIN"}.get(method, "IWP")
+    pay_num = payout_id if payout_id else random.randint(78329, 99999)
     data = {
         "emoji": emoji,
         "headline": headline,
@@ -200,7 +205,7 @@ async def notify_real_withdrawal(user: dict, method: str, account_number: str, a
         "amount": float(amount),
         "user_id": user.get("id", 0),
         "refer_id": user.get("referral_code") or "DIRECT",
-        "trx_hash": f"{trx_prefix}{secrets.token_hex(5).upper()}",
+        "trx_hash": f"IW-PAY-{pay_num}",
     }
     await send_to_proof_channel(format_tg_message(data))
 
